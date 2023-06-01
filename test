@@ -1,0 +1,12 @@
+Dlang has a feature called UTFS where the first argument can call a function
+
+or stated another way:
+foo.bar(faz) and bar(foo,faz) are equlent
+
+heres a hello world using it
+
+import std
+
+void main(){
+   "hello world".writeln; //UTFS ROX
+}
