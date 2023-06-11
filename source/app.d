@@ -81,32 +81,49 @@ void main(string[] input){
 			}}
 			import monkyyykeys;
 			with(button){
-				if(mouse1){
-					color[GetMouseY/textsize][GetMouseX/width]=color1;
-				}
-				if(mouse2){
-					background[GetMouseY/textsize][GetMouseX/width]=color2;
-				}
-				static Vector2 toolcenter;
-				if(mouse3.pressed){
-					toolcenter=GetMousePosition;
-				}
-				if(mouse3.released){
-					color1=cast(ubyte)radial(GetMousePosition,toolcenter);
-				}
-				if(mouse4.pressed){
-					static int i;
-					"swaped".writeln(i++);
-					ubyte t=color1;
-					color1=color2;
-					color2=t;
-				}
-				if(mouse3){
-					DrawTextureV(radialtool,toolcenter-Vector2(75,75),Colors.WHITE);
-					DrawCircle(GetMouseX,GetMouseY,16,colors[radial(GetMousePosition,toolcenter)]);
+				if(shift){
+					if(mouse1){
+						foreach(ref e;color[GetMouseY/textsize]){
+							e=color1;
+						}
+					}
+					if(mouse2){
+						foreach(ref e;background[GetMouseY/textsize]){
+							e=color2;
+						}
+					}
+					if(mouse4){
+						color1=color[GetMouseY/textsize][GetMouseX/width];
+						color2=background[GetMouseY/textsize][GetMouseX/width];
+					}
 				} else {
-					DrawCircle(GetMouseX,GetMouseY,7,colors[color2]);
-					DrawCircle(GetMouseX,GetMouseY,5,colors[color1]);
+					if(mouse1){
+						color[GetMouseY/textsize][GetMouseX/width]=color1;
+					}
+					if(mouse2){
+						background[GetMouseY/textsize][GetMouseX/width]=color2;
+					}
+					static Vector2 toolcenter;
+					if(mouse3.pressed){
+						toolcenter=GetMousePosition;
+					}
+					if(mouse3.released){
+						color1=cast(ubyte)radial(GetMousePosition,toolcenter);
+					}
+					if(mouse4.pressed){
+						static int i;
+						"swaped".writeln(i++);
+						ubyte t=color1;
+						color1=color2;
+						color2=t;
+					}
+					if(mouse3){
+						DrawTextureV(radialtool,toolcenter-Vector2(75,75),Colors.WHITE);
+						DrawCircle(GetMouseX,GetMouseY,16,colors[radial(GetMousePosition,toolcenter)]);
+					} else {
+						DrawCircle(GetMouseX,GetMouseY,7,colors[color2]);
+						DrawCircle(GetMouseX,GetMouseY,5,colors[color1]);
+					}
 				}
 			}
 		EndDrawing();
